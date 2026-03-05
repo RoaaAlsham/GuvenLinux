@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=PardusGuard
+Comment=System Hardening & Security Assessment Tool
+Exec=pardusguard
+Icon=pardusguard
+Terminal=false
+Type=Application
+Categories=System;Security;
+Keywords=security;hardening;scan;audit;
+StartupNotify=true

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC
+  "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+  "http://www.freedesktop.org/standards/PolicyKit/1.0/policyconfig.dtd">
+<policyconfig>
+  <vendor>PardusGuard</vendor>
+  <vendor_url>https://github.com/your-org/pardusguard</vendor_url>
+
+  <action id="org.pardus.pardusguard.scan">
+    <description>Run a security scan requiring elevated privileges</description>
+    <message>Authentication is required to run a privileged security scan.</message>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+  </action>
+
+  <action id="org.pardus.pardusguard.fix">
+    <description>Apply a security hardening fix</description>
+    <message>Authentication is required to apply a system hardening fix.</message>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin</allow_active>
+    </defaults>
+  </action>
+</policyconfig>

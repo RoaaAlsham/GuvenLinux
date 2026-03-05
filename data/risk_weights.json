@@ -1,0 +1,23 @@
+{
+  "severity_multipliers": {
+    "Critical": 10,
+    "High": 5,
+    "Medium": 2,
+    "Low": 0.5,
+    "Info": 0
+  },
+  "score_ranges": [
+    {"min": 85, "max": 100, "label": "Secure", "colour": "#27ae60"},
+    {"min": 65, "max": 84,  "label": "Moderate Risk", "colour": "#f39c12"},
+    {"min": 40, "max": 64,  "label": "High Risk", "colour": "#e67e22"},
+    {"min": 0,  "max": 39,  "label": "Critical", "colour": "#e74c3c"}
+  ],
+  "engine_weights": {
+    "port_scanner": 1.0,
+    "ssh_auditor": 1.0,
+    "service_auditor": 0.8,
+    "kernel_hardening": 1.0,
+    "file_permission": 0.9,
+    "user_auditor": 1.0
+  }
+}
