@@ -8,7 +8,7 @@
 <!-- How did you verify this works? -->
 - [ ] All existing tests pass (`pytest tests/ -v`)
 - [ ] Linting passes (`flake8 src/ tests/`)
-- [ ] Tested on Pardus 25.0
+- [ ] Tested on Linux
 
 ## Screenshots
 <!-- If UI changes, include before/after screenshots -->

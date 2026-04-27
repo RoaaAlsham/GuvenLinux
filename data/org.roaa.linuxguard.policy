@@ -3,10 +3,10 @@
   "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
   "http://www.freedesktop.org/standards/PolicyKit/1.0/policyconfig.dtd">
 <policyconfig>
-  <vendor>PardusGuard</vendor>
-  <vendor_url>https://github.com/your-org/pardusguard</vendor_url>
+  <vendor>LinuxGuard</vendor>
+  <vendor_url>https://github.com/your-org/linuxguard</vendor_url>
 
-  <action id="org.pardus.pardusguard.scan">
+  <action id="org.roaa.linuxguard.scan">
     <description>Run a security scan requiring elevated privileges</description>
     <message>Authentication is required to run a privileged security scan.</message>
     <defaults>
@@ -16,7 +16,7 @@
     </defaults>
   </action>
 
-  <action id="org.pardus.pardusguard.fix">
+  <action id="org.roaa.linuxguard.fix">
     <description>Apply a security hardening fix</description>
     <message>Authentication is required to apply a system hardening fix.</message>
     <defaults>

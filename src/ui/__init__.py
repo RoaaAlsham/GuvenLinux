@@ -1,1 +1,1 @@
-"""GTK4 UI page modules for PardusGuard."""
+"""GTK4 UI page modules for LinuxGuard."""

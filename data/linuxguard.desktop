@@ -1,8 +1,8 @@
 [Desktop Entry]
-Name=PardusGuard
+Name=LinuxGuard
 Comment=System Hardening & Security Assessment Tool
-Exec=pardusguard
-Icon=pardusguard
+Exec=linuxguard
+Icon=linuxguard
 Terminal=false
 Type=Application
 Categories=System;Security;

@@ -1,11 +1,11 @@
-# Contributing to PardusGuard
+# Contributing to LinuxGuard
 
-Thank you for your interest in contributing to PardusGuard! This document provides guidelines for contributing to the project.
+Thank you for your interest in contributing to LinuxGuard! This document provides guidelines for contributing to the project.
 
 ## Getting Started
 
 1. Fork the repository
-2. Clone your fork: `git clone https://github.com/your-username/pardusguard.git`
+2. Clone your fork: `git clone https://github.com/your-username/linuxguard.git`
 3. Create a feature branch: `git checkout -b feature/your-feature-name`
 4. Set up the development environment (see below)
 
@@ -13,7 +13,7 @@ Thank you for your interest in contributing to PardusGuard! This document provid
 
 ### Prerequisites
 
-- Pardus 25.0 or Debian-based Linux distribution
+- Debian-based Linux distribution
 - Python 3.10+
 - GTK4 development libraries
 
@@ -76,7 +76,7 @@ High severity findings with recommended replacements.
 
 Open an issue using the **Bug Report** template and include:
 
-- Pardus/OS version
+- OS version
 - Steps to reproduce
 - Expected vs actual behavior
 - Relevant log output

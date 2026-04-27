@@ -1,12 +1,10 @@
-# PardusGuard
+# LinuxGuard
 
-**System Hardening & Security Assessment Tool for Pardus Linux**
-
-TEKNOFEST 2026 | Development Category
+**System Hardening & Security Assessment Tool for Linux**
 
 ---
 
-PardusGuard is an open-source system hardening and security assessment tool built specifically for the [Pardus](https://www.pardus.org.tr/) Linux operating system. It bridges the gap between powerful but complex security tools and everyday users who lack the expertise to interpret their output or act on their recommendations.
+LinuxGuard is an open-source system hardening and security assessment tool built specifically for the Linux operating system. It bridges the gap between powerful but complex security tools and everyday users who lack the expertise to interpret their output or act on their recommendations.
 
 ## Features
 
@@ -30,7 +28,7 @@ PardusGuard is an open-source system hardening and security assessment tool buil
 
 ## Requirements
 
-- Pardus 25.0 (or Debian-based Linux)
+- Debian-based Linux
 - Python 3.10+
 - GTK4 + PyGObject
 - System tools: `ss`, `systemctl`, `nft`, `find`, `sysctl`
@@ -40,14 +38,14 @@ PardusGuard is an open-source system hardening and security assessment tool buil
 ### From .deb package (recommended)
 
 ```bash
-sudo dpkg -i pardusguard_*.deb
+sudo dpkg -i linuxguard_*.deb
 ```
 
 ### From source
 
 ```bash
-git clone https://github.com/your-org/pardusguard.git
-cd pardusguard
+git clone https://github.com/your-org/linuxguard.git
+cd linuxguard
 pip install -r requirements.txt
 python -m src.main
 ```
@@ -55,7 +53,7 @@ python -m src.main
 ## Project Structure
 
 ```
-pardusguard/
+linuxguard/
 ├── src/
 │   ├── main.py                  # Entry point
 │   ├── main_window.py           # GTK4 application window
@@ -82,8 +80,8 @@ pardusguard/
 │       ├── settings_page.py
 │       └── logs_page.py
 ├── data/
-│   ├── org.pardus.pardusguard.policy
-│   ├── pardusguard.desktop
+│   ├── org.roaa.linuxguard.policy
+│   ├── linuxguard.desktop
 │   └── risk_weights.json
 ├── tests/
 ├── debian/
@@ -114,9 +112,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute.
 
 This project is licensed under the GNU General Public License v3.0 — see the [LICENSE](LICENSE) file for details.
 
-## Team
-
-TEKNOFEST 2026 Development Category Entry
 
 ---
 

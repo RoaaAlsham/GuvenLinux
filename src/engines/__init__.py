@@ -1,1 +1,1 @@
-"""Scan engine modules for PardusGuard."""
+"""Scan engine modules for LinuxGuard."""

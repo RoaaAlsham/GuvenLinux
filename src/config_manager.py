@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 from typing import Any, Dict
 
-CONFIG_DIR = Path.home() / ".config" / "pardusguard"
+CONFIG_DIR = Path.home() / ".config" / "linuxguard"
 CONFIG_FILE = CONFIG_DIR / "settings.json"
 
 DEFAULTS: Dict[str, Any] = {

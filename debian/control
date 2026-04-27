@@ -1,12 +1,12 @@
-Source: pardusguard
+Source: linuxguard
 Section: admin
 Priority: optional
-Maintainer: PardusGuard Team <pardusguard@example.com>
+Maintainer: LinuxGuard Team <linuxguard@example.com>
 Build-Depends: debhelper-compat (= 13), dh-python, python3-all, python3-setuptools
 Standards-Version: 4.6.2
-Homepage: https://github.com/your-org/pardusguard
+Homepage: https://github.com/your-org/linuxguard
 
-Package: pardusguard
+Package: linuxguard
 Architecture: all
 Depends: ${python3:Depends}, ${misc:Depends},
  python3-gi,
@@ -14,7 +14,7 @@ Depends: ${python3:Depends}, ${misc:Depends},
  gir1.2-gtk-4.0,
  python3-reportlab,
  policykit-1
-Description: System Hardening & Security Assessment Tool for Pardus Linux
- PardusGuard scans your system across six security domains, scores
+Description: System Hardening & Security Assessment Tool for Linux
+ LinuxGuard scans your system across six security domains, scores
  the overall risk posture, and lets you apply recommended hardening
  fixes through a GTK4 graphical interface — no terminal knowledge required.
