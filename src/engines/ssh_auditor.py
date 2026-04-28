@@ -46,31 +46,10 @@ class SSHAuditor:
 
     # ------------------------------------------------------------------ #
     # Check definitions
-    #
-    # Each check dict may contain:
-    #   key             : lowercase sshd_config key to inspect
-    #   severity        : Severity enum value for this finding
-    #   title           : short finding title shown in the UI
-    #   description     : longer explanation shown in Scan Results
-    #   fix_command     : shell command to remediate (None = manual only)
-    #   fix_description : plain-English fix instruction
-    #   weight          : relative importance within the severity level
-    #
-    #   bad_values      : (optional) explicit list of values that trigger
-    #                     this check. When present, _is_triggered() does a
-    #                     simple membership test instead of comparing against
-    #                     SECURE_DEFAULTS. This is what allows us to express
-    #                     nuance: "yes" is CRITICAL, "prohibit-password" is
-    #                     MEDIUM — two separate check entries, each with its
-    #                     own bad_values list.
-    #
-    # For numeric keys (maxauthtries, logingracetime) bad_values is never
-    # used — the numeric threshold comparison always applies.
     # ------------------------------------------------------------------ #
 
     CHECKS = [
         # ── PermitRootLogin ───────────────────────────────────────────
-        # Split into two checks so each state gets its own severity 
         {
             "key":             "permitrootlogin",
             "bad_values":      ["yes"],          # password-based root login
@@ -83,7 +62,7 @@ class SSHAuditor:
             ),
             "fix_command":     (
                 "sed -i 's/^#*PermitRootLogin.*/PermitRootLogin no/'"
-                " /etc/ssh/sshd_config && systemctl reload sshd"
+                " /etc/ssh/sshd_config && systemctl reload ssh"
             ),
             "fix_description": "Set PermitRootLogin to 'no' in sshd_config",
             "weight":          3.0,
@@ -103,7 +82,7 @@ class SSHAuditor:
             ),
             "fix_command":     (
                 "sed -i 's/^#*PermitRootLogin.*/PermitRootLogin no/'"
-                " /etc/ssh/sshd_config && systemctl reload sshd"
+                " /etc/ssh/sshd_config && systemctl reload ssh"
             ),
             "fix_description": (
                 "Set PermitRootLogin to 'no'. Ensure a non-root sudo user "
@@ -138,7 +117,7 @@ class SSHAuditor:
             ),
             "fix_command":     (
                 "sed -i 's/^#*PermitEmptyPasswords.*/PermitEmptyPasswords no/'"
-                " /etc/ssh/sshd_config && systemctl reload sshd"
+                " /etc/ssh/sshd_config && systemctl reload ssh"
             ),
             "fix_description": "Set PermitEmptyPasswords to 'no'.",
             "weight":          3.0,
@@ -153,7 +132,7 @@ class SSHAuditor:
             ),
             "fix_command":     (
                 "sed -i 's/^#*MaxAuthTries.*/MaxAuthTries 3/'"
-                " /etc/ssh/sshd_config && systemctl reload sshd"
+                " /etc/ssh/sshd_config && systemctl reload ssh"
             ),
             "fix_description": "Set MaxAuthTries to 3 or lower.",
             "weight":          2.0,
@@ -168,7 +147,7 @@ class SSHAuditor:
             ),
             "fix_command":     (
                 "sed -i 's/^#*Protocol.*/Protocol 2/'"
-                " /etc/ssh/sshd_config && systemctl reload sshd"
+                " /etc/ssh/sshd_config && systemctl reload ssh"
             ),
             "fix_description": "Set Protocol to '2' in sshd_config.",
             "weight":          3.0,
@@ -183,7 +162,7 @@ class SSHAuditor:
             ),
             "fix_command":     (
                 "sed -i 's/^#*X11Forwarding.*/X11Forwarding no/'"
-                " /etc/ssh/sshd_config && systemctl reload sshd"
+                " /etc/ssh/sshd_config && systemctl reload ssh"
             ),
             "fix_description": "Set X11Forwarding to 'no'.",
             "weight":          1.5,
@@ -198,7 +177,7 @@ class SSHAuditor:
             ),
             "fix_command":     (
                 "sed -i 's/^#*AllowAgentForwarding.*/AllowAgentForwarding no/'"
-                " /etc/ssh/sshd_config && systemctl reload sshd"
+                " /etc/ssh/sshd_config && systemctl reload ssh"
             ),
             "fix_description": "Set AllowAgentForwarding to 'no'.",
             "weight":          1.5,
@@ -213,7 +192,7 @@ class SSHAuditor:
             ),
             "fix_command":     (
                 "sed -i 's/^#*AllowTcpForwarding.*/AllowTcpForwarding no/'"
-                " /etc/ssh/sshd_config && systemctl reload sshd"
+                " /etc/ssh/sshd_config && systemctl reload ssh"
             ),
             "fix_description": "Set AllowTcpForwarding to 'no'.",
             "weight":          1.5,
@@ -228,7 +207,7 @@ class SSHAuditor:
             ),
             "fix_command":     (
                 "sed -i 's/^#*LoginGraceTime.*/LoginGraceTime 60/'"
-                " /etc/ssh/sshd_config && systemctl reload sshd"
+                " /etc/ssh/sshd_config && systemctl reload ssh"
             ),
             "fix_description": "Set LoginGraceTime to 60 seconds or lower.",
             "weight":          1.0,
