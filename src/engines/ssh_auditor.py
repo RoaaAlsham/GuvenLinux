@@ -28,12 +28,12 @@ class SSHAuditor:
         "protocol":               "2",
     }
 
-    # Single source of truth — what we consider secure
+    # what we consider fully secure
     SECURE_DEFAULTS = {
         "PermitRootLogin":        "no",
         "PasswordAuthentication": "no",
-        "MaxAuthTries":           "3",       # numeric: flag if > this
-        "LoginGraceTime":         "60",      # numeric: flag if > this
+        "MaxAuthTries":           "3",
+        "LoginGraceTime":         "60",
         "Protocol":               "2",
         "X11Forwarding":          "no",
         "PermitEmptyPasswords":   "no",
@@ -41,25 +41,78 @@ class SSHAuditor:
         "AllowTcpForwarding":     "no",
     }
 
-    # Numeric parameters — compared as integers instead of strings
+    # Numeric parameters — compared as integers, not strings
     NUMERIC_PARAMS = {"maxauthtries", "logingracetime"}
 
+    # ------------------------------------------------------------------ #
+    # Check definitions
+    #
+    # Each check dict may contain:
+    #   key             : lowercase sshd_config key to inspect
+    #   severity        : Severity enum value for this finding
+    #   title           : short finding title shown in the UI
+    #   description     : longer explanation shown in Scan Results
+    #   fix_command     : shell command to remediate (None = manual only)
+    #   fix_description : plain-English fix instruction
+    #   weight          : relative importance within the severity level
+    #
+    #   bad_values      : (optional) explicit list of values that trigger
+    #                     this check. When present, _is_triggered() does a
+    #                     simple membership test instead of comparing against
+    #                     SECURE_DEFAULTS. This is what allows us to express
+    #                     nuance: "yes" is CRITICAL, "prohibit-password" is
+    #                     MEDIUM — two separate check entries, each with its
+    #                     own bad_values list.
+    #
+    # For numeric keys (maxauthtries, logingracetime) bad_values is never
+    # used — the numeric threshold comparison always applies.
+    # ------------------------------------------------------------------ #
+
     CHECKS = [
+        # ── PermitRootLogin ───────────────────────────────────────────
+        # Split into two checks so each state gets its own severity 
         {
             "key":             "permitrootlogin",
+            "bad_values":      ["yes"],          # password-based root login
             "severity":        Severity.CRITICAL,
-            "title":           "Root login via SSH is permitted",
+            "title":           "Root login via SSH is permitted with password",
             "description":     (
-                "SSH allows direct root login. An attacker who guesses "
-                "the root password gains full system access immediately."
+                "PermitRootLogin is set to 'yes', allowing an attacker to "
+                "brute-force the root password directly over SSH and gain "
+                "immediate full system access with no further escalation needed."
             ),
             "fix_command":     (
-                "sed -i 's/^PermitRootLogin.*/PermitRootLogin no/'"
-                " /etc/ssh/sshd_config"
+                "sed -i 's/^#*PermitRootLogin.*/PermitRootLogin no/'"
+                " /etc/ssh/sshd_config && systemctl reload sshd"
             ),
             "fix_description": "Set PermitRootLogin to 'no' in sshd_config",
             "weight":          3.0,
         },
+        {
+            "key":             "permitrootlogin",
+            "bad_values":      ["prohibit-password", "without-password"],
+            "severity":        Severity.MEDIUM,
+            "title":           "Root login via SSH is enabled (key-only)",
+            "description":     (
+                "PermitRootLogin is set to 'prohibit-password' (or the "
+                "equivalent 'without-password'). Password-based root login is "
+                "blocked, but key-based root login is still allowed. A stolen "
+                "or compromised SSH private key grants immediate root access. "
+                "Best practice is to disable direct root login entirely and "
+                "use a non-root account with sudo instead."
+            ),
+            "fix_command":     (
+                "sed -i 's/^#*PermitRootLogin.*/PermitRootLogin no/'"
+                " /etc/ssh/sshd_config && systemctl reload sshd"
+            ),
+            "fix_description": (
+                "Set PermitRootLogin to 'no'. Ensure a non-root sudo user "
+                "exists before applying this change."
+            ),
+            "weight":          1.5,
+        },
+
+        # ── All other checks (unchanged behaviour) ────────────────────
         {
             "key":             "passwordauthentication",
             "severity":        Severity.HIGH,
@@ -68,10 +121,10 @@ class SSHAuditor:
                 "Password authentication allows brute-force attacks. "
                 "Key-based authentication is significantly more secure."
             ),
-            "fix_command":     None,  # Risky — could lock user out
+            "fix_command":     None,
             "fix_description": (
                 "Set 'PasswordAuthentication no' after confirming "
-                "key-based auth is working"
+                "key-based auth is working."
             ),
             "weight":          2.5,
         },
@@ -84,10 +137,10 @@ class SSHAuditor:
                 "with no credentials whatsoever."
             ),
             "fix_command":     (
-                "sed -i 's/^PermitEmptyPasswords.*/PermitEmptyPasswords no/'"
-                " /etc/ssh/sshd_config"
+                "sed -i 's/^#*PermitEmptyPasswords.*/PermitEmptyPasswords no/'"
+                " /etc/ssh/sshd_config && systemctl reload sshd"
             ),
-            "fix_description": "Set PermitEmptyPasswords to 'no'",
+            "fix_description": "Set PermitEmptyPasswords to 'no'.",
             "weight":          3.0,
         },
         {
@@ -99,10 +152,10 @@ class SSHAuditor:
                 "to brute-force credentials before being disconnected."
             ),
             "fix_command":     (
-                "sed -i 's/^MaxAuthTries.*/MaxAuthTries 3/'"
-                " /etc/ssh/sshd_config"
+                "sed -i 's/^#*MaxAuthTries.*/MaxAuthTries 3/'"
+                " /etc/ssh/sshd_config && systemctl reload sshd"
             ),
-            "fix_description": "Set MaxAuthTries to 3 or lower",
+            "fix_description": "Set MaxAuthTries to 3 or lower.",
             "weight":          2.0,
         },
         {
@@ -114,10 +167,10 @@ class SSHAuditor:
                 "to man-in-the-middle attacks. Only Protocol 2 should be used."
             ),
             "fix_command":     (
-                "sed -i 's/^Protocol.*/Protocol 2/'"
-                " /etc/ssh/sshd_config"
+                "sed -i 's/^#*Protocol.*/Protocol 2/'"
+                " /etc/ssh/sshd_config && systemctl reload sshd"
             ),
-            "fix_description": "Set Protocol to '2' in sshd_config",
+            "fix_description": "Set Protocol to '2' in sshd_config.",
             "weight":          3.0,
         },
         {
@@ -129,10 +182,10 @@ class SSHAuditor:
                 "users and is rarely needed on servers."
             ),
             "fix_command":     (
-                "sed -i 's/^X11Forwarding.*/X11Forwarding no/'"
-                " /etc/ssh/sshd_config"
+                "sed -i 's/^#*X11Forwarding.*/X11Forwarding no/'"
+                " /etc/ssh/sshd_config && systemctl reload sshd"
             ),
-            "fix_description": "Set X11Forwarding to 'no'",
+            "fix_description": "Set X11Forwarding to 'no'.",
             "weight":          1.5,
         },
         {
@@ -144,10 +197,10 @@ class SSHAuditor:
                 "your SSH keys to authenticate to other servers."
             ),
             "fix_command":     (
-                "sed -i 's/^AllowAgentForwarding.*/AllowAgentForwarding no/'"
-                " /etc/ssh/sshd_config"
+                "sed -i 's/^#*AllowAgentForwarding.*/AllowAgentForwarding no/'"
+                " /etc/ssh/sshd_config && systemctl reload sshd"
             ),
-            "fix_description": "Set AllowAgentForwarding to 'no'",
+            "fix_description": "Set AllowAgentForwarding to 'no'.",
             "weight":          1.5,
         },
         {
@@ -159,10 +212,10 @@ class SSHAuditor:
                 "potentially bypassing firewall rules."
             ),
             "fix_command":     (
-                "sed -i 's/^AllowTcpForwarding.*/AllowTcpForwarding no/'"
-                " /etc/ssh/sshd_config"
+                "sed -i 's/^#*AllowTcpForwarding.*/AllowTcpForwarding no/'"
+                " /etc/ssh/sshd_config && systemctl reload sshd"
             ),
-            "fix_description": "Set AllowTcpForwarding to 'no'",
+            "fix_description": "Set AllowTcpForwarding to 'no'.",
             "weight":          1.5,
         },
         {
@@ -174,10 +227,10 @@ class SSHAuditor:
                 "longer, enabling slow denial-of-service attacks."
             ),
             "fix_command":     (
-                "sed -i 's/^LoginGraceTime.*/LoginGraceTime 60/'"
-                " /etc/ssh/sshd_config"
+                "sed -i 's/^#*LoginGraceTime.*/LoginGraceTime 60/'"
+                " /etc/ssh/sshd_config && systemctl reload sshd"
             ),
-            "fix_description": "Set LoginGraceTime to 60 seconds or lower",
+            "fix_description": "Set LoginGraceTime to 60 seconds or lower.",
             "weight":          1.0,
         },
     ]
@@ -189,7 +242,6 @@ class SSHAuditor:
         Parse sshd_config and return active key-value pairs.
 
         Skips blank lines and comments. Keys are lowercased.
-        Logs errors rather than silently swallowing them.
         """
         config: dict[str, str] = {}
 
@@ -206,35 +258,62 @@ class SSHAuditor:
                     else:
                         logger.warning(
                             "sshd_config line %d has unexpected format: %r",
-                            lineno, line
+                            lineno, line,
                         )
         except FileNotFoundError:
-            logger.info("sshd_config not found at %s — SSH may not be installed", path)
+            logger.info(
+                "sshd_config not found at %s — SSH may not be installed", path
+            )
         except PermissionError:
-            logger.error("Permission denied reading %s — run with sufficient privileges", path)
+            logger.error(
+                "Permission denied reading %s — run with sufficient privileges",
+                path,
+            )
         except OSError as exc:
             logger.error("Failed to read %s: %s", path, exc)
 
         return config
 
-    def _is_triggered(self, key: str, value: str) -> bool:
+    def _is_triggered(self, check: dict, value: str) -> bool:
         """
-        Determine whether a parameter value fails the security check.
-        Reads threshold from SECURE_DEFAULTS — no hardcoded values here.
-        """
-        secure_value = self.SECURE_DEFAULTS.get(
-            # SECURE_DEFAULTS uses original casing — find matching key
-            next((k for k in self.SECURE_DEFAULTS if k.lower() == key), key),
-            ""
-        ).lower()
+        Decide whether a config value fails a specific check.
 
+        Two evaluation paths:
+
+        1. Explicit bad_values list (used by permitrootlogin checks):
+               triggered  ←→  value in check["bad_values"]
+           This lets two separate check entries cover "yes" (CRITICAL)
+           and "prohibit-password" (MEDIUM) independently.
+
+        2. Numeric threshold (maxauthtries, logingracetime):
+               triggered  ←→  int(value) > int(secure_threshold)
+
+        3. String equality fallback (all other keys):
+               triggered  ←→  value != secure_value
+        """
+        key = check["key"]
+
+        # Path 1 — explicit bad-value membership test
+        if "bad_values" in check:
+            return value in check["bad_values"]
+
+        # Path 2 — numeric threshold comparison
         if key in self.NUMERIC_PARAMS:
+            secure_value = self.SECURE_DEFAULTS.get(
+                next((k for k in self.SECURE_DEFAULTS if k.lower() == key), key),
+                "0",
+            ).lower()
             try:
                 return int(value) > int(secure_value)
             except ValueError:
                 logger.warning("Non-numeric value for %s: %r", key, value)
                 return False
 
+        # Path 3 — plain string comparison against SECURE_DEFAULTS
+        secure_value = self.SECURE_DEFAULTS.get(
+            next((k for k in self.SECURE_DEFAULTS if k.lower() == key), key),
+            "",
+        ).lower()
         return value != secure_value
 
     def scan(self) -> List[Finding]:
@@ -245,18 +324,23 @@ class SSHAuditor:
             logger.info("SSH config not found — skipping SSH audit")
             return findings
 
-        logger.info("Starting SSH configuration audit: %s", self.SSHD_CONFIG_PATH)
+        logger.info(
+            "Starting SSH configuration audit: %s", self.SSHD_CONFIG_PATH
+        )
         config = self.parse_config(self.SSHD_CONFIG_PATH)
 
-        # Merge active config over daemon defaults
+        # Merge file values over daemon built-in defaults
         effective = {**self.SSH_DEFAULTS, **config}
 
         for check in self.CHECKS:
-            key = check["key"]
+            key   = check["key"]
             value = effective.get(key, "")
 
-            if self._is_triggered(key, value):
-                logger.debug("Finding triggered: %s (value=%r)", check["title"], value)
+            # Pass the whole check dict 
+            if self._is_triggered(check, value):
+                logger.debug(
+                    "Finding triggered: %s (value=%r)", check["title"], value
+                )
                 findings.append(Finding(
                     engine="ssh_auditor",
                     title=check["title"],
