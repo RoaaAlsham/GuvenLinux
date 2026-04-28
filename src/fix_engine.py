@@ -40,13 +40,14 @@ class FixEngine:
         Returns (success: bool, message: str).
         Message is the stdout/stderr output — display it in the UI.
         """
+        
         logger.info("Applying fix: %s | command: %s", action.title, action.command)
 
-        cmd = action.command.split()
-
-        # Prefix with pkexec when root is required
+        # Instead of splitting by spaces, we pass the entire raw string to the system shell ('sh -c'). 
         if action.requires_root:
-            cmd = ["pkexec"] + cmd
+            cmd = ["pkexec", "sh", "-c", action.command]
+        else:
+            cmd = ["sh", "-c", action.command]
 
         try:
             result = subprocess.run(
