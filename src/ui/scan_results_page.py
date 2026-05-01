@@ -38,7 +38,7 @@ class ScanResultsPage(Gtk.Box):
         self._filter_combo = Gtk.DropDown.new_from_strings(
             ["All", "Critical", "High", "Medium", "Low", "Info"]
         )
-        self._filter_combo.connect("notify::selected", self._on_filter_changed)
+        self._filter_combo.connect("notify::selected", self._on_filter_changed)# notify only when a box from the combo is selected ('::' is a filter)
         toolbar.append(self._filter_combo)
 
         self._count_label = Gtk.Label(label="0 findings")
@@ -76,6 +76,7 @@ class ScanResultsPage(Gtk.Box):
         self._selected_filter = labels[combo.get_selected()]
         self._rebuild_list()
 
+    # deletes all rows in the ListBox and rebuilds them using only the filtered data.
     def _rebuild_list(self):
         # Remove old rows
         while (child := self._list_box.get_first_child()):

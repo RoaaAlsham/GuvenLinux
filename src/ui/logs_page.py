@@ -43,7 +43,7 @@ class LogsPage(Gtk.Box):
         log = self._win._app.log_mgr
 
         # Scans
-        while (c := self._scan_list.get_first_child()):
+        while (c := self._scan_list.get_first_child()): # ':=' walrus operator used to assign and use in one line
             self._scan_list.remove(c)
         for record in log.recent_scans():
             row = Gtk.ListBoxRow()

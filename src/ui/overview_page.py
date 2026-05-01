@@ -30,6 +30,7 @@ class OverviewPage(Gtk.Box):
     def _build(self):
         # Score circle (simulated with a big label)
         self._score_label = Gtk.Label(label="—")
+        # GTK uses Pango, a text rendering engine that lets you use HTML-like tags to change font sizes
         self._score_label.set_markup(
             '<span font="72" weight="bold" color="#888">—</span>'
         )

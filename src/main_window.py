@@ -20,7 +20,7 @@ class MainWindow(Adw.ApplicationWindow):
     Page routing works like this:
       1. User clicks a sidebar row
       2. _on_nav_selected() is called
-      3. We swap the visible child of self._stack
+      3. We swap the visible child of self._stack (stackis the right-side of the screen[where content is displayed])
     """
 
     def __init__(self, app):
@@ -179,11 +179,12 @@ class MainWindow(Adw.ApplicationWindow):
         self._scan_btn.set_label("Run Scan")
         self._progress.set_visible(False)
 
-        # Navigate to results
+#comment this block if you want not to move to results page immediately
+        #Navigate to results
         self._stack.set_visible_child_name("results")
         for i, row in enumerate(self._nav_list):
             if hasattr(row, 'page_id') and row.page_id == "results":
                 self._nav_list.select_row(row)
                 break
 
-        return False  # GLib.idle_add requires False to not repeat (to removw the function from executing queue)
+        return False  # GLib.idle_add requires False to not repeat (to remove the function from executing queue)

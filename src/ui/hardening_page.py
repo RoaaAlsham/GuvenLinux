@@ -90,6 +90,7 @@ class HardeningPage(Gtk.Box):
         desc.add_css_class("caption")
         text_box.append(desc)
 
+    #uncomment in debug mode
         # cmd = Gtk.Label(label=f"$ {finding.fix_command}")
         # cmd.set_halign(Gtk.Align.START)
         # cmd.add_css_class("monospace")
