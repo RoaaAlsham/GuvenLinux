@@ -106,6 +106,8 @@ class MainWindow(Adw.ApplicationWindow):
         self._add_page("hardening", "🔧 Hardening",      self._hardening_page)
         self._add_page("logs",      "📋 Logs",           self._logs_page)
 
+        #fetch the historical logs before the first scan
+        self._logs_page.refresh()
         # Select first page
         self._nav_list.select_row(self._nav_list.get_row_at_index(0))
 
