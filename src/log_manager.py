@@ -68,7 +68,7 @@ class LogManager:
                (timestamp, score, label, finding_count, findings_json)
                VALUES (?, ?, ?, ?, ?)""",
             (
-                datetime.now().isoformat(),
+                datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 round(score, 2),
                 label,
                 len(findings),
@@ -87,7 +87,7 @@ class LogManager:
                (timestamp, action_id, title, command, success, output)
                VALUES (?, ?, ?, ?, ?, ?)""",
             (
-                datetime.now().isoformat(),
+                datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 action_id, title, command,
                 1 if success else 0,
                 output,
