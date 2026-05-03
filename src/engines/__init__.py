@@ -1,1 +1,1 @@
-"""Scan engine modules for LinuxGuard."""
+"""Scan engine modules for GuvenLinux."""

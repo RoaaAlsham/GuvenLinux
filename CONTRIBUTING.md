@@ -1,11 +1,11 @@
-# Contributing to LinuxGuard
+# Contributing to GuvenLinux
 
-Thank you for your interest in contributing to LinuxGuard! This document provides guidelines for contributing to the project.
+Thank you for your interest in contributing to GuvenLinux! This document provides guidelines for contributing to the project.
 
 ## Getting Started
 
 1. Fork the repository
-2. Clone your fork: `git clone https://github.com/your-username/linuxguard.git`
+2. Clone your fork: `git clone https://github.com/your-username/guvenlinux.git`
 3. Create a feature branch: `git checkout -b feature/your-feature-name`
 4. Set up the development environment (see below)
 

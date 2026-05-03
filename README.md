@@ -1,10 +1,10 @@
-# LinuxGuard
+# GuvenLinux
 
 **System Hardening & Security Assessment Tool for Linux**
 
 ---
 
-LinuxGuard is an open-source system hardening and security assessment tool built specifically for the Linux operating system. It bridges the gap between powerful but complex security tools and everyday users who lack the expertise to interpret their output or act on their recommendations.
+GuvenLinux is an open-source system hardening and security assessment tool built specifically for the Linux operating system. It bridges the gap between powerful but complex security tools and everyday users who lack the expertise to interpret their output or act on their recommendations.
 
 ## Features
 
@@ -38,14 +38,14 @@ LinuxGuard is an open-source system hardening and security assessment tool built
 ### From .deb package (recommended)
 
 ```bash
-sudo dpkg -i linuxguard_*.deb
+sudo dpkg -i guvenlinux_*.deb
 ```
 
 ### From source
 
 ```bash
-git clone https://github.com/your-org/linuxguard.git
-cd linuxguard
+git clone https://github.com/your-org/GuvenLinux.git
+cd GuvenLinux
 pip install -r requirements.txt
 python -m src.main
 ```
@@ -53,7 +53,7 @@ python -m src.main
 ## Project Structure
 
 ```
-linuxguard/
+GuvenLinux/
 ├── src/
 │   ├── main.py                  # Entry point
 │   ├── main_window.py           # GTK4 application window
@@ -80,8 +80,8 @@ linuxguard/
 │       ├── settings_page.py
 │       └── logs_page.py
 ├── data/
-│   ├── org.roaa.linuxguard.policy
-│   ├── linuxguard.desktop
+│   ├── org.roaa.guvenlinux.policy
+│   ├── guvenlinux.desktop
 │   └── risk_weights.json
 ├── tests/
 ├── debian/

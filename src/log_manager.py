@@ -8,7 +8,7 @@ import sqlite3
 from datetime import datetime
 from pathlib import Path
 
-LOG_DIR = Path.home() / ".local" / "share" / "linuxguard"
+LOG_DIR = Path.home() / ".local" / "share" / "guvenlinux"
 DB_PATH = LOG_DIR / "audit.db" # operator overloading to / to act as path joiner
 RECENT_SCANS_LIMIT=50
 

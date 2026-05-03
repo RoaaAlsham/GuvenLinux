@@ -3,10 +3,10 @@
   "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
   "http://www.freedesktop.org/standards/PolicyKit/1.0/policyconfig.dtd">
 <policyconfig>
-  <vendor>LinuxGuard</vendor>
-  <vendor_url>https://github.com/your-org/linuxguard</vendor_url>
+  <vendor>GuvenLinux</vendor>
+  <vendor_url>https://github.com/your-org/guvenlinux</vendor_url>
 
-  <action id="org.roaa.linuxguard.scan">
+  <action id="org.roaa.guvenlinux.scan">
     <description>Run a security scan requiring elevated privileges</description>
     <message>Authentication is required to run a privileged security scan.</message>
     <defaults>
@@ -16,7 +16,7 @@
     </defaults>
   </action>
 
-  <action id="org.roaa.linuxguard.fix">
+  <action id="org.roaa.guvenlinux.fix">
     <description>Apply a security hardening fix</description>
     <message>Authentication is required to apply a system hardening fix.</message>
     <defaults>

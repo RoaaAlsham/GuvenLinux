@@ -24,7 +24,7 @@ class MainWindow(Adw.ApplicationWindow):
     """
 
     def __init__(self, app):
-        super().__init__(application=app, title="LinuxGuard")
+        super().__init__(application=app, title="GuvenLinux")
         self.set_default_size(1100, 700)
 
         self._app = app
@@ -45,7 +45,7 @@ class MainWindow(Adw.ApplicationWindow):
         outer.append(header)
 
         # Title widget
-        header.set_title_widget(Gtk.Label(label="LinuxGuard"))
+        header.set_title_widget(Gtk.Label(label="GuvenLinux"))
 
         # Scan button in header
         self._scan_btn = Gtk.Button(label="Run Scan")

@@ -69,7 +69,7 @@ def build_scanner() -> ScanRunner:
     return runner 
 
 
-class LinuxGuardApp(Adw.Application):
+class GuvenLinuxApp(Adw.Application):
     """
     The main application class.
     Inheritance: This class *is an* Adw.Application, meaning it inherits all
@@ -79,7 +79,7 @@ class LinuxGuardApp(Adw.Application):
     def __init__(self):
         # Call the parent Adw.Application constructor to set up the app.
         super().__init__(
-            application_id="org.roaa.linuxguard",
+            application_id="org.roaa.guvenlinux",
             flags=Gio.ApplicationFlags.DEFAULT_FLAGS
         )
         
@@ -104,7 +104,7 @@ class LinuxGuardApp(Adw.Application):
 
 def main():
 
-    app = LinuxGuardApp()
+    app = GuvenLinuxApp()
     
     sys.exit(app.run(sys.argv))
 

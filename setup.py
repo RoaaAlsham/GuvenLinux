@@ -1,22 +1,22 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="pardusguard",
+    name="guvenlinux",
     version="0.1.0",
-    description="System Hardening & Security Assessment Tool for Pardus Linux",
+    description="System Hardening & Security Assessment Tool for Debian based Linux",
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     license="GPL-3.0",
     packages=find_packages(),
     python_requires=">=3.10",
     install_requires=[
-        "PyGObject>=3.42.0",
+        "PyGObject>=3.44.0",
         "pycairo>=1.20.0",
         "reportlab>=4.0",
     ],
     entry_points={
         "console_scripts": [
-            "pardusguard=src.main:main",
+            "guvenlinux=src.main:main",
         ],
     },
     classifiers=[
