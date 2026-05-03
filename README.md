@@ -65,12 +65,12 @@ GuvenLinux/
 │   ├── log_manager.py           # Audit logging
 │   ├── config_manager.py        # Settings persistence
 │   ├── engines/
-│   │   ├── port_scanner.py
-│   │   ├── ssh_auditor.py
-│   │   ├── service_auditor.py
-│   │   ├── kernel_hardening.py
-│   │   ├── file_permission.py
-│   │   └── user_auditor.py
+│   │   ├── port_scanner.py [implemented]
+│   │   ├── ssh_auditor.py [implemented]
+│   │   ├── service_auditor.py [implemented]
+│   │   ├── kernel_hardening.py [pending]
+│   │   ├── file_permission.py [pending]
+│   │   └── user_auditor.py [pending]
 │   └── ui/
 │       ├── dashboard.py
 │       ├── scan_results.py
