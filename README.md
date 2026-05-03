@@ -1,10 +1,10 @@
 # GuvenLinux
 
-**System Hardening & Security Assessment Tool for Linux**
+**System Hardening & Security Assessment Tool for Linux (MVP)**
 
 ---
 
-GuvenLinux is an open-source system hardening and security assessment tool built specifically for the Linux operating system. It bridges the gap between powerful but complex security tools and everyday users who lack the expertise to interpret their output or act on their recommendations.
+GuvenLinux is a Security assessment and System Hardening tool MVP that built to acquire a deep understanding of linux operating system security and the complete process of linux desktop app development 
 
 ## Features
 
@@ -35,16 +35,8 @@ GuvenLinux is an open-source system hardening and security assessment tool built
 
 ## Installation
 
-### From .deb package (recommended)
-
 ```bash
-sudo dpkg -i guvenlinux_*.deb
-```
-
-### From source
-
-```bash
-git clone https://github.com/your-org/GuvenLinux.git
+git clone https://github.com/RoaaAlsham/GuvenLinux.git
 cd GuvenLinux
 pip install -r requirements.txt
 python -m src.main
@@ -112,7 +104,11 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute.
 
 This project is licensed under the GNU General Public License v3.0 — see the [LICENSE](LICENSE) file for details.
 
-
+## Example usecase
+![initial](Screenshots/1-initial.png)
+![overview](Screenshots/2-overview.png)
+![scan_result](Screenshots/3-scan_result.png)
+![fixes](Screenshots/4-fixes.png)
+![scan_logs](Screenshots/5-scan_logs.png)
 ---
 
-*Scan. Score. Harden. Educate.*
